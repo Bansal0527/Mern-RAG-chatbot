@@ -96,7 +96,7 @@ This approach ensures that the AI responses are grounded in the organization's k
 
 ## API Documentation
 
-Detailed API documentation can be found [here](link_to_api_docs_if_generated_separately) or by exploring the `backend/routes` and `backend/controllers` directories. Key endpoints include:
+Detailed API documentation can be found [here](backend/API_DOCUMENTATION.md) or by exploring the `backend/routes` and `backend/controllers` directories. Key endpoints include:
 
 -   `/api/v1/auth/register`: User registration.
 -   `/api/v1/auth/login`: User login.
