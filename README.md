@@ -10,7 +10,6 @@ This project is a Knowledge Management Platform built using the MERN stack (Mong
   - [Frontend Setup](#frontend-setup)
 - [Usage](#usage)
 - [Architecture Overview](#architecture-overview)
-- [Technology Choices](#technology-choices)
 - [LLM Use](#llm-use)
 - [API Documentation](#api-documentation)
 
