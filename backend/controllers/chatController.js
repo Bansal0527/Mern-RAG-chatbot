@@ -1,3 +1,4 @@
+
 const { ChatSession } = require('../models/Chat');
 const { llm } = require('../config/langchain');
 const { querySimilarChunks } = require('../config/vectorStore');
@@ -94,9 +95,74 @@ const sendMessage = async (req, res) => {
   }
 };
 
+const getHistory = async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    const session = await ChatSession.findOne({
+      _id: sessionId,
+      userId: req.user._id
+    }).populate('messages.sourceDocs.documentId', 'filename');
 
+    if (!session) {
+      return res.status(404).json({ error: 'Chat session not found' });
+    }
+
+    res.json(session);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching chat history' });
+  }
+};
+
+// Delete a chat session
+const deleteSession = async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    const session = await ChatSession.findOneAndDelete({ _id: sessionId, userId: req.user._id });
+    if (!session) {
+      return res.status(404).json({ error: 'Chat session not found' });
+    }
+    console.log("deleted")
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Error deleting chat session' });
+  }
+};
+
+// Edit chat session title
+const editSessionTitle = async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    const { title } = req.body;
+    const session = await ChatSession.findOneAndUpdate(
+      { _id: sessionId, userId: req.user._id },
+      { title },
+      { new: true }
+    );
+    if (!session) {
+      return res.status(404).json({ error: 'Chat session not found' });
+    }
+    res.json(session);
+  } catch (error) {
+    res.status(500).json({ error: 'Error updating chat session title' });
+  }
+};
+// Get all chat sessions for a user
+const getSessions = async (req, res) => {
+  try {
+    const sessions = await ChatSession.find({ userId: req.user._id })
+      .select('_id title createdAt updatedAt')
+      .sort({ updatedAt: -1 });
+    res.json({ sessions });
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching chat sessions' });
+  }
+};
 
 module.exports = {
   createSession,
   sendMessage,
+  getHistory,
+  getSessions,
+  deleteSession,
+  editSessionTitle
 };

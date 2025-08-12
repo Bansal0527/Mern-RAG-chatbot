@@ -15,6 +15,9 @@ export const endpoints = {
   // Chat endpoints
   createChatSession: `${BASE_URL}/chat/sessions`,
   sendChatMessage: (sessionId) => `${BASE_URL}/chat/sessions/${sessionId}/messages`,
+  getChatSessions: `${BASE_URL}/chat/sessions`,
+  getChatHistory: (sessionId) => `${BASE_URL}/chat/sessions/${sessionId}`,
+  deleteChatSession: (sessionId) => `${BASE_URL}/chat/sessions/${sessionId}`,
 };
 
 // Helper for authenticated requests
