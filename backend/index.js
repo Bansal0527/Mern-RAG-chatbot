@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors'); // Import cors
-
+const authRouter = require('./routes/Auth'); // Import auth routes
 require('dotenv').config();
 
 // Import database connection
@@ -17,6 +17,7 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use('/api/v1/auth', authRouter);
 
 
 
