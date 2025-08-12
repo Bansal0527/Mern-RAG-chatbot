@@ -45,11 +45,34 @@ const generateEmbeddings = async (documents) => {
     return embeddings;
   };
 
+  const findSimilarDocuments = async (query, documents, topK = 3) => {
+    const queryEmbedding = await embeddings.embedQuery(query);
+  
+    // Calculate cosine similarity between query and documents
+    const similarities = documents.map((doc, index) => ({
+      document: doc,
+      score: cosineSimilarity(queryEmbedding, doc.embedding)
+    }));
+  
+    // Sort by similarity score and return top K results
+    return similarities
+      .sort((a, b) => b.score - a.score)
+      .slice(0, topK);
+  };
+  
+  // Utility function to calculate cosine similarity
+  const cosineSimilarity = (vecA, vecB) => {
+    const dotProduct = vecA.reduce((acc, val, i) => acc + val * vecB[i], 0);
+    const normA = Math.sqrt(vecA.reduce((acc, val) => acc + val * val, 0));
+    const normB = Math.sqrt(vecB.reduce((acc, val) => acc + val * val, 0));
+    return dotProduct / (normA * normB);
+  };
 
   module.exports = {
     llm,
     textSplitter,
     embeddingsModel,
     generateEmbeddings,
+    findSimilarDocuments,
     createDocumentChunks
 };
