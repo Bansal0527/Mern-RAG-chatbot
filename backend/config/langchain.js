@@ -51,4 +51,5 @@ const generateEmbeddings = async (documents) => {
     textSplitter,
     embeddingsModel,
     generateEmbeddings,
+    createDocumentChunks
 };
