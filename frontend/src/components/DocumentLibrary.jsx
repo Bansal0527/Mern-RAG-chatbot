@@ -25,12 +25,12 @@ const DocumentLibrary = ({ documents, onDelete }) => {
                     className="text-red-600 hover:underline mr-2"
                     onClick={() => onDelete(doc.id)}
                   >Delete</button>
-                  <a
+                  {/* <a
                     href={doc.previewUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline"
-                  >Preview</a>
+                  >Preview</a> */}
                 </td>
               </tr>
             ))}

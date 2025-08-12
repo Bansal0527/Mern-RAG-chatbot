@@ -49,9 +49,9 @@ const DocumentUploader = ({ onUpload, error: parentError, loading }) => {
         onClick={handleUpload}
         disabled={uploading || loading || files.length === 0}
       >
-        {uploading || loading ? 'Uploading...' : 'Upload'}
+        {uploading  ? 'Uploading...' : 'Upload'}
       </button>
-      {(uploading || loading) && (
+      {(uploading ) && (
         <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
           <div
             className="bg-blue-600 h-2 rounded-full"
